@@ -11,7 +11,7 @@
 goog.module('goog.events.BrowserFeature');
 goog.module.declareLegacyNamespace();
 
-const GoogUserAgent = goog.require('goog.userAgent');
+const googUserAgent = goog.require('goog.userAgent');
 
 
 /**
@@ -36,43 +36,43 @@ const BrowserFeature = {
    * Whether the button attribute of the event is W3C compliant.  False in
    * Internet Explorer prior to version 9; document-version dependent.
    */
-  HAS_W3C_BUTTON: !GoogUserAgent.IE || GoogUserAgent.isDocumentModeOrHigher(9),
+  HAS_W3C_BUTTON: !googUserAgent.IE || googUserAgent.isDocumentModeOrHigher(9),
 
   /**
    * Whether the browser supports full W3C event model.
    */
   HAS_W3C_EVENT_SUPPORT:
-      !GoogUserAgent.IE || GoogUserAgent.isDocumentModeOrHigher(9),
+      !googUserAgent.IE || googUserAgent.isDocumentModeOrHigher(9),
 
   /**
    * To prevent default in IE7-8 for certain keydown events we need set the
    * keyCode to -1.
    */
   SET_KEY_CODE_TO_PREVENT_DEFAULT:
-      GoogUserAgent.IE && !GoogUserAgent.isVersionOrHigher('9'),
+      googUserAgent.IE && !googUserAgent.isVersionOrHigher('9'),
 
   /**
    * Whether the `navigator.onLine` property is supported.
    */
   HAS_NAVIGATOR_ONLINE_PROPERTY:
-      !GoogUserAgent.WEBKIT || GoogUserAgent.isVersionOrHigher('528'),
+      !googUserAgent.WEBKIT || googUserAgent.isVersionOrHigher('528'),
 
   /**
    * Whether HTML5 network online/offline events are supported.
    */
   HAS_HTML5_NETWORK_EVENT_SUPPORT:
-      GoogUserAgent.GECKO && GoogUserAgent.isVersionOrHigher('1.9b') ||
-          GoogUserAgent.IE && GoogUserAgent.isVersionOrHigher('8') ||
-          GoogUserAgent.OPERA && GoogUserAgent.isVersionOrHigher('9.5') ||
-          GoogUserAgent.WEBKIT && GoogUserAgent.isVersionOrHigher('528'),
+      googUserAgent.GECKO && googUserAgent.isVersionOrHigher('1.9b') ||
+          googUserAgent.IE && googUserAgent.isVersionOrHigher('8') ||
+          googUserAgent.OPERA && googUserAgent.isVersionOrHigher('9.5') ||
+          googUserAgent.WEBKIT && googUserAgent.isVersionOrHigher('528'),
 
   /**
    * Whether HTML5 network events fire on document.body, or otherwise the
    * window.
    */
   HTML5_NETWORK_EVENTS_FIRE_ON_BODY:
-      GoogUserAgent.GECKO && !GoogUserAgent.isVersionOrHigher('8') ||
-          GoogUserAgent.IE && !GoogUserAgent.isVersionOrHigher('9'),
+      googUserAgent.GECKO && !googUserAgent.isVersionOrHigher('8') ||
+          googUserAgent.IE && !googUserAgent.isVersionOrHigher('9'),
 
   /**
    * Whether touch is enabled in the browser.
