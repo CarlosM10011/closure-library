@@ -62,9 +62,9 @@ const BrowserFeature = {
    */
   HAS_HTML5_NETWORK_EVENT_SUPPORT:
       GoogUserAgent.GECKO && GoogUserAgent.isVersionOrHigher('1.9b') ||
-      GoogUserAgent.IE && GoogUserAgent.isVersionOrHigher('8') ||
-      GoogUserAgent.OPERA && GoogUserAgent.isVersionOrHigher('9.5') ||
-      GoogUserAgent.WEBKIT && GoogUserAgent.isVersionOrHigher('528'),
+          GoogUserAgent.IE && GoogUserAgent.isVersionOrHigher('8') ||
+          GoogUserAgent.OPERA && GoogUserAgent.isVersionOrHigher('9.5') ||
+          GoogUserAgent.WEBKIT && GoogUserAgent.isVersionOrHigher('528'),
 
   /**
    * Whether HTML5 network events fire on document.body, or otherwise the
@@ -72,7 +72,7 @@ const BrowserFeature = {
    */
   HTML5_NETWORK_EVENTS_FIRE_ON_BODY:
       GoogUserAgent.GECKO && !GoogUserAgent.isVersionOrHigher('8') ||
-      GoogUserAgent.IE && !GoogUserAgent.isVersionOrHigher('9'),
+          GoogUserAgent.IE && !GoogUserAgent.isVersionOrHigher('9'),
 
   /**
    * Whether touch is enabled in the browser.
@@ -97,10 +97,9 @@ const BrowserFeature = {
    * http://msdn.microsoft.com/en-us/library/ie/hh772103(v=vs.85).aspx
    * http://msdn.microsoft.com/library/hh673557(v=vs.85).aspx
    */
-  MSPOINTER_EVENTS:
-      ('MSPointerEvent' in goog.global &&
-       !!(goog.global['navigator'] &&
-          goog.global['navigator']['msPointerEnabled'])),
+  MSPOINTER_EVENTS: ('MSPointerEvent' in goog.global &&
+                     !!(goog.global['navigator'] &&
+                        goog.global['navigator']['msPointerEnabled'])),
 
   /**
    * Whether addEventListener supports {passive: true}.
@@ -113,11 +112,8 @@ const BrowserFeature = {
     }
 
     var passive = false;
-    var options = Object.defineProperty({}, 'passive', {
-      get: function() {
-        passive = true;
-      }
-    });
+    var options = Object.defineProperty({}, 'passive',
+                                        {get: function() { passive = true; }});
     try {
       goog.global.addEventListener('test', goog.nullFunction, options);
       goog.global.removeEventListener('test', goog.nullFunction, options);
