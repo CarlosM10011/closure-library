@@ -27,6 +27,7 @@ const PATH = '';
  *   overwriteExistingFiles: boolean,
  *   paths: !Array<{path: string, directory: boolean}>,
  *   recursive: boolean,
+ *   relativePathToDepsFile: boolean,
  * }}
  */
 let Args;
@@ -79,6 +80,10 @@ function showHelp(errorMessage = '') {
         --dep_file:
           Path to a deps file to use for all tests. If not specified but a
           *_test_deps.js file exists it will be automatically included.
+        --relative_path_to_dep_file
+          use a relative path to the deps file from the generated _test.html
+          page. Only valid if --dep_file is included.
+          Defaults to false.
         --recursive
           generate _test.html for each _test.js in each directory recursively.
           Defaults to false.
@@ -110,6 +115,10 @@ function processArgs(args) {
         break;
       case '--dep_file':
         processedArgs.depsFile = value;
+        break;
+      case '--relative_path_to_dep_file':
+        processedArgs.relativePathToDepsFile =
+            String(value).toLowerCase() !== 'false';
         break;
       case '--help':
         showHelp();
@@ -151,6 +160,10 @@ function processArgs(args) {
   if (processedArgs.depsFile && !fs.existsSync(processedArgs.depsFile)) {
     throw new Error(
         'Specified deps file does not exist: ' + processedArgs.depsFile);
+  }
+
+  if (processedArgs.relativePathToDepsFile && !processedArgs.depsFile) {
+    throw new Error('Option --relative_path_to_dep_file requires --dep_file.');
   }
 
   return processedArgs;
@@ -225,8 +238,15 @@ function maybeGenerateHtmlForFile(filename, args) {
       '';
 
   const testDepsFilename = args.depsFile || baseFileName + '_test_deps.js';
-  const pathToDeps =
-      fs.existsSync(testDepsFilename) ? path.basename(testDepsFilename) : '';
+  let pathToDeps = '';
+  if (args.relativePathToDepsFile) {
+    pathToDeps = fs.existsSync(testDepsFilename) ?
+        path.relative(path.dirname(htmlFilename), testDepsFilename) :
+        '';
+  } else {
+    pathToDeps =
+        fs.existsSync(testDepsFilename) ? path.basename(testDepsFilename) : '';
+  }
 
   const pathToBase = path.relative(path.dirname(htmlFilename), args.basePath);
 
